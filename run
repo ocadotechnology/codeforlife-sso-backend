@@ -1,0 +1,16 @@
+#!/bin/bash
+set -e
+cd "${BASH_SOURCE%/*}"
+
+cd frontend
+
+npm install
+npm run build
+node djangoBundler.js &
+
+cd ../backend
+
+pipenv install --dev
+pipenv run python ./manage.py migrate --noinput
+pipenv run python ./manage.py collectstatic --noinput --clear
+pipenv run python ./manage.py runserver "$@" & cd ..
