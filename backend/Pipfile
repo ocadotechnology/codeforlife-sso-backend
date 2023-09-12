@@ -6,6 +6,7 @@ name = "pypi"
 [packages]
 # codeforlife = {ref = "v0.1.12", git = "https://github.com/ocadotechnology/codeforlife-package-python.git"}
 cfl-common = "==6.33.1" # TODO: remove
+codeforlife-portal = "*" # TODO: remove
 aimmo = ">=2" # TODO: remove
 rapid-router = ">=4" # TODO: remove
 phonenumbers = "==8.12.12" # TODO: remove
