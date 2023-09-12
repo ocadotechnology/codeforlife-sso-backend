@@ -4,9 +4,16 @@ verify_ssl = true
 name = "pypi"
 
 [packages]
-codeforlife = {ref = "v0.1.12", git = "https://github.com/ocadotechnology/codeforlife-package-python.git"}
+# codeforlife = {ref = "v0.1.12", git = "https://github.com/ocadotechnology/codeforlife-package-python.git"}
+# cfl-common = "==6.33.1"
+django = "==3.2.19"
+djangorestframework = "==3.13.1"
 
 [dev-packages]
+black = "*"
+pytest-django = "==4.5.2"
+pytest = "==7.*"
+pytest-env = "==0.8.2"
 
 [requires]
-python_version = "3.11"
+python_version = "3.8"
