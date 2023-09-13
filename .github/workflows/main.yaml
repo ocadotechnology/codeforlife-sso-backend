@@ -1,0 +1,88 @@
+name: Main
+
+on:
+  push:
+    paths-ignore:
+      - "README.md"
+      - "CHANGELOG.md"
+      - "LICENSE"
+      - ".gitignore"
+      - ".vscode"
+  workflow_dispatch:
+
+env:
+  SERVICE: portal
+  PYTHON_VERSION: 3.8
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - name: 🛫 Checkout
+        uses: actions/checkout@v3
+
+      - name: 🐍 Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: ${{ env.PYTHON_VERSION }}
+      
+      - name: Install Python Packages
+        run: |
+          python -m pip install --upgrade pip
+          python -m pip install pipenv
+          pipenv install --dev
+
+      - name: Check Code Format
+        run: if ! pipenv run black --check .; then exit 1; fi
+  
+      - name: Check Migrations
+        run: pipenv run python manage.py makemigrations --check --dry-run
+  
+        # TODO: assert code coverage target.
+      - name: Test Code Units
+        run: pipenv run pytest
+
+  build-and-deploy:
+    runs-on: ubuntu-latest
+    # if: github.ref_name == 'production' || github.ref_name == 'development' || github.ref_name == 'staging'
+    # environment: ${{ github.ref_name }}
+    steps:
+      - name: 🛫 Checkout
+        uses: actions/checkout@v3
+
+      - name: 🐍 Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: ${{ env.PYTHON_VERSION }}
+
+      - name: 🗝 Authenticate with GCloud
+        uses: google-github-actions/auth@v1
+        with:
+          credentials_json: ${{ secrets.GCP_CREDENTIALS }}
+
+      - name: 🤖 Set up GCloud SDK
+        uses: google-github-actions/setup-gcloud@v1
+
+      - name: 🛠 Install Backend Dependencies
+        working-directory: ./backend
+        run: |
+          python -m pip install --upgrade pip
+          python -m pip install pipenv
+          pipenv install
+
+      - name: 🛠 Generate requirements.txt
+        working-directory: ./backend
+        run: pipenv requirements > requirements.txt
+
+      # https://mikefarah.gitbook.io/yq/
+      - name: 🖊️ Configure App Deployment
+        uses: mikefarah/yq@master
+        with:
+          cmd: |
+            yq -i '
+              .service = "development-kurono"
+            ' backend/app.yaml
+
+      - name: 🚀 Deploy App on GCloud
+        working-directory: ./backend
+        run: gcloud app deploy
