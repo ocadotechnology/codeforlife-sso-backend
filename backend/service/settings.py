@@ -131,3 +131,12 @@ STATICFILES_DIRS = [BASE_DIR / "myapp/static"]
 # https://docs.djangoproject.com/en/3.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
+
+# Authentication backend classes
+# https://docs.djangoproject.com/en/4.2/ref/settings/#authentication-backends
+
+AUTHENTICATION_BACKENDS = [
+    "api.auth_backends.DependentStudentBackend",
+    "api.auth_backends.DependentStudentTokenBackend",
+    "api.auth_backends.TeacherOrIndependentStudentBackend",
+]
