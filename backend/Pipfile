@@ -5,13 +5,14 @@ name = "pypi"
 
 [packages]
 # codeforlife = {ref = "v0.1.12", git = "https://github.com/ocadotechnology/codeforlife-package-python.git"}
-cfl-common = "==6.33.1" # TODO: remove
-codeforlife-portal = "*" # TODO: remove
-aimmo = ">=2" # TODO: remove
-rapid-router = ">=4" # TODO: remove
-phonenumbers = "==8.12.12" # TODO: remove
-django = "==3.2.19"
+django = "==3.2.20"
 djangorestframework = "==3.13.1"
+# https://pypi.org/user/codeforlife/
+cfl-common = "==6.36.0" # TODO: remove
+codeforlife-portal = "==6.36.0" # TODO: remove
+aimmo = "==2.10.6" # TODO: remove
+rapid-router = "==5.11.3" # TODO: remove
+phonenumbers = "==8.12.12" # TODO: remove
 
 [dev-packages]
 black = "*"
