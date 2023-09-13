@@ -10,36 +10,7 @@ from django.http.request import HttpRequest
 User = get_user_model()
 
 
-class DependentStudentBackend(BaseBackend):
-    def authenticate(
-        self,
-        request: HttpRequest,
-        username: t.Optional[str] = None,
-        password: t.Optional[str] = None,
-        classId: t.Optional[str] = None,
-        **kwargs
-    ) -> t.Optional[AbstractBaseUser]:
-        if username is None or password is None or classId is None:
-            return
-
-        try:
-            user = User.objects.get(
-                username=username,
-                new_student__class_field__access_code=classId,
-            )
-            if user.check_password(password):
-                return user
-        except User.DoesNotExist:
-            return
-
-    def get_user(self, user_id: int) -> t.Optional[AbstractBaseUser]:
-        try:
-            return User.objects.get(id=user_id)
-        except User.DoesNotExist:
-            return
-
-
-class DependentStudentTokenBackend(BaseBackend):
+class UserIdAndTokenBackend(BaseBackend):
     def authenticate(
         self,
         request: HttpRequest,
@@ -48,11 +19,12 @@ class DependentStudentTokenBackend(BaseBackend):
         **kwargs
     ) -> t.Optional[AbstractBaseUser]:
         user = self.get_user(user_id)
-        if user:
+        if user and getattr(user, "is_active", True):
             # Check the url against the student's stored hash.
             student = Student.objects.get(new_user=user)
             if (
                 student.login_id
+                # TODO: refactor this
                 and get_hashed_login_id(login_id) == student.login_id
             ):
                 return user
