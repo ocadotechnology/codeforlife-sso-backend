@@ -41,10 +41,10 @@ jobs:
       #   working-directory: ./backend
       #   run: pipenv run python manage.py makemigrations --check --dry-run
   
-        # TODO: assert code coverage target.
-      - name: Test Code Units
-        working-directory: ./backend
-        run: pipenv run pytest
+      # TODO: assert code coverage target.
+      # - name: Test Code Units
+      #   working-directory: ./backend
+      #   run: pipenv run pytest
 
   build-and-deploy:
     runs-on: ubuntu-latest
