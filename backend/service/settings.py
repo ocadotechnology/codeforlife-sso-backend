@@ -136,7 +136,7 @@ DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 # https://docs.djangoproject.com/en/4.2/ref/settings/#authentication-backends
 
 AUTHENTICATION_BACKENDS = [
-    "api.auth_backends.DependentStudentBackend",
-    "api.auth_backends.DependentStudentTokenBackend",
-    "api.auth_backends.TeacherOrIndependentStudentBackend",
+    "api.auth_backends.EmailAndPasswordBackend",
+    "api.auth_backends.UserIdAndTokenBackend",
+    "api.auth_backends.UsernameAndPasswordAndClassIdBackend",
 ]
