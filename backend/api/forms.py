@@ -10,8 +10,8 @@ from django.http import HttpRequest
 
 
 class BaseAuthForm(forms.Form):
-    def __init__(self, request: HttpRequest = None, *args, **kwargs):
-        self.request = request  # Should this be optional?
+    def __init__(self, request: HttpRequest, *args, **kwargs):
+        self.request = request
         self.user: t.Optional[AbstractBaseUser] = None
 
     def clean(self, **kwargs):

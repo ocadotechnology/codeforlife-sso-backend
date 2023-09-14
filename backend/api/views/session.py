@@ -1,8 +1,9 @@
 import logging
+from enum import Enum
 from functools import cached_property
 
+# from codeforlife.user.models import User
 from codeforlife.mixins import CronMixin
-from codeforlife.user.models import User
 from common.models import UserSession
 from django.contrib.auth.views import LoginView as _LoginView
 from django.contrib.sessions.models import Session, SessionManager
@@ -19,22 +20,29 @@ from ..forms import (
 )
 
 
+# TODO: use User.Type from cfl package
+class UserType(str, Enum):
+    TEACHER = "teacher"
+    DEP_STUDENT = "dependent-student"
+    INDEP_STUDENT = "independent-student"
+
+
 # TODO: add 2FA logic
 class LoginView(_LoginView):
     @cached_property
     def user_type(self):
-        return User.Type(self.kwargs["user_type"])
+        return UserType(self.kwargs["user_type"])
 
     def get_form_class(self):
-        if self.user_type == User.Type.INDEP_STUDENT:
+        if self.user_type == UserType.INDEP_STUDENT:
             return CredentialsForm
 
-        elif self.user_type == User.Type.DEP_STUDENT:
+        elif self.user_type == UserType.DEP_STUDENT:
             if "user_id" in self.request.POST:
                 return DependentStudentUserIdCredentialsForm
             return DependentStudentUsernameCredentialsForm
 
-        else:  # user_type == User.Type.TEACHER
+        else:  # user_type == UserType.TEACHER
             if False:  # TODO: add 2fa logic.
                 return OneTimePasswordForm
             return CredentialsForm
@@ -45,7 +53,7 @@ class LoginView(_LoginView):
         # TODO: use google analytics
         user = form.get_user()
         user_session = {"user": user}
-        if self.user_type == User.Type.DEP_STUDENT:
+        if self.user_type == UserType.DEP_STUDENT:
             user_session["class_field"] = user.new_student.class_field
             user_session["login_type"] = (
                 "direct" if "user_id" in self.request.POST else "classform"
