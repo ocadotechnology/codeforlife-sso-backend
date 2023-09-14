@@ -10,7 +10,7 @@ from django.http.request import HttpRequest
 User = get_user_model()
 
 
-class UserIdAndTokenBackend(BaseBackend):
+class UserIdAndLoginIdBackend(BaseBackend):
     def authenticate(
         self,
         request: HttpRequest,
@@ -18,6 +18,9 @@ class UserIdAndTokenBackend(BaseBackend):
         login_id: t.Optional[str] = None,
         **kwargs
     ) -> t.Optional[AbstractBaseUser]:
+        if user_id is None or login_id is None:
+            return
+
         user = self.get_user(user_id)
         if user and getattr(user, "is_active", True):
             # Check the url against the student's stored hash.
