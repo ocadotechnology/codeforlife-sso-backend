@@ -21,7 +21,7 @@ from rest_framework import status
 
 urlpatterns = [
     path(
-        settings.SERVICE_BASE_URL,
+        settings.SERVICE_BASE_ROUTE,
         include(
             [
                 path("admin/", admin.site.urls),
@@ -40,7 +40,7 @@ urlpatterns = [
     re_path(
         r".*",
         lambda request: HttpResponse(
-            f'Service not found. The base URL is "{settings.SERVICE_BASE_URL}".',
+            f'The base route is "{settings.SERVICE_BASE_ROUTE}".',
             status=status.HTTP_404_NOT_FOUND,
         ),
         name="no-service",

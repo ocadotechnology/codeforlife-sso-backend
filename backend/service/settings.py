@@ -148,4 +148,4 @@ AUTHENTICATION_BACKENDS = [
 
 # Service
 
-SERVICE_BASE_URL = os.getenv("SERVICE_BASE_URL", "sso/")
+SERVICE_BASE_ROUTE = os.getenv("SERVICE_BASE_ROUTE", "sso/")

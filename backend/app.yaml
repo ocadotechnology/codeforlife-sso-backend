@@ -8,3 +8,4 @@ inbound_services:
 env_variables:
   DEBUG: "0"
   DJANGO_SETTINGS_MODULE: "service.settings"
+  SERVICE_BASE_ROUTE: REPLACE_ME
