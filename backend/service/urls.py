@@ -13,12 +13,36 @@ Including another URLconf
     1. Import the include() function: from django.urls import include, path
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
+from django.conf import settings
 from django.contrib import admin
-from django.urls import include, path, re_path
 from django.http import HttpResponse
+from django.urls import include, path, re_path
+from rest_framework import status
 
 urlpatterns = [
-    path("admin/", admin.site.urls),
-    path("api/", include("api.urls")),
-    re_path(r".*", lambda request: HttpResponse("found me!")),
+    path(
+        settings.SERVICE_BASE_URL,
+        include(
+            [
+                path("admin/", admin.site.urls),
+                path("api/", include("api.urls")),
+                re_path(
+                    r".*",
+                    # lambda request: render(request, "frontend.html"),
+                    lambda request: HttpResponse(
+                        "TODO: relocate login pages to sso service and redirect to them"
+                    ),
+                    name="frontend",
+                ),
+            ]
+        ),
+    ),
+    re_path(
+        r".*",
+        lambda request: HttpResponse(
+            f'Service not found. The base URL is "{settings.SERVICE_BASE_URL}".',
+            status=status.HTTP_404_NOT_FOUND,
+        ),
+        name="no-service",
+    ),
 ]

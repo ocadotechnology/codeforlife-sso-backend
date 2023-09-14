@@ -140,3 +140,12 @@ AUTHENTICATION_BACKENDS = [
     "api.auth_backends.UserIdAndLoginIdBackend",
     "api.auth_backends.UsernameAndPasswordAndClassIdBackend",
 ]
+
+
+# ------------------------------------------------------------------------------
+# Custom
+# ------------------------------------------------------------------------------
+
+# Service
+
+SERVICE_BASE_URL = os.getenv("SERVICE_BASE_URL", "sso/")
