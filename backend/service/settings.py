@@ -132,7 +132,7 @@ STATICFILES_DIRS = [BASE_DIR / "myapp/static"]
 
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 
-# Authentication backend classes
+# Authentication backends
 # https://docs.djangoproject.com/en/4.2/ref/settings/#authentication-backends
 
 AUTHENTICATION_BACKENDS = [
@@ -141,6 +141,15 @@ AUTHENTICATION_BACKENDS = [
     "api.auth_backends.UsernameAndPasswordAndClassIdBackend",
 ]
 
+# Sessions
+# https://docs.djangoproject.com/en/3.2/topics/http/sessions/
+
+SESSION_COOKIE_AGE = 60 * 60
+SESSION_SAVE_EVERY_REQUEST = True
+SESSION_EXPIRE_AT_BROWSER_CLOSE = True
+SESSION_COOKIE_SECURE = True
+SESSION_COOKIE_SAMESITE = "None"
+SESSION_COOKIE_DOMAIN = "codeforlife.education"
 
 # ------------------------------------------------------------------------------
 # Custom
