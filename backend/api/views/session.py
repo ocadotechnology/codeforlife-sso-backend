@@ -7,7 +7,8 @@ from django.contrib.auth import login
 from django.contrib.auth.views import LoginView as _LoginView
 from django.contrib.sessions.models import Session, SessionManager
 from django.core.management import call_command
-from django.http import HttpResponse
+from django.http import HttpResponse, JsonResponse
+from rest_framework import status
 from rest_framework.response import Response
 from rest_framework.views import APIView
 
@@ -46,6 +47,9 @@ class LoginView(_LoginView):
         UserSession.objects.create(**user_session)
 
         return HttpResponse()
+
+    def form_invalid(self, form: BaseAuthForm):
+        return JsonResponse(form.errors, status=status.HTTP_400_BAD_REQUEST)
 
 
 class ClearExpiredView(CronMixin, APIView):
