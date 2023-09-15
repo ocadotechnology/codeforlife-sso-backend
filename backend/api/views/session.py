@@ -19,20 +19,31 @@ from ..forms import (
     UserIdAuthForm,
     UsernameAuthForm,
 )
+from ..middlewares.login import MissingUniqueFormKey, TooManyUniqueFormKeys
 
 
 # TODO: add 2FA logic
 class LoginView(_LoginView):
     def get_form_class(self):
-        if "email" in self.request.POST:
+        unique_form_keys = [
+            key
+            for key in ["email", "username", "user_id", "otp"]
+            if key in self.request.POST
+        ]
+        if len(unique_form_keys) == 0:
+            raise MissingUniqueFormKey()
+        elif len(unique_form_keys) >= 2:
+            raise TooManyUniqueFormKeys()
+
+        unique_form_key = unique_form_keys[0]
+        if unique_form_key == "email":
             return EmailAuthForm
-        elif "username" in self.request.POST:
+        elif unique_form_key == "username":
             return UsernameAuthForm
-        elif "user_id" in self.request.POST:
+        elif unique_form_key == "user_id":
             return UserIdAuthForm
-        elif "otp" in self.request.POST:  # TODO: add 2fa logic.
+        elif unique_form_key == "otp":  # TODO: add 2fa logic.
             return OtpAuthForm
-        raise Exception()  # TODO: handle this
 
     def form_valid(self, form: BaseAuthForm):
         login(self.request, form.user)
