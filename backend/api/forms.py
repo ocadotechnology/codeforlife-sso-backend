@@ -33,7 +33,21 @@ class BaseAuthForm(forms.Form):
         raise NotImplementedError()
 
 
-class CredentialsForm(BaseAuthForm):
+class OtpAuthForm(BaseAuthForm):
+    otp = forms.CharField(
+        validators=[
+            RegexValidator(r"^[0-9]{6}$", "Must be 6 digits"),
+        ],
+    )
+
+    def clean(self):
+        # TODO: implement 2FA flow
+        return super().clean(
+            otp=self.cleaned_data["otp"],
+        )
+
+
+class EmailAuthForm(BaseAuthForm):
     email = forms.EmailField()
     # TODO: use regex validator
     password = forms.CharField(strip=False)
@@ -51,21 +65,7 @@ class CredentialsForm(BaseAuthForm):
         )
 
 
-class OneTimePasswordForm(BaseAuthForm):
-    otp = forms.CharField(
-        validators=[
-            RegexValidator(r"^[0-9]{6}$", "Must be 6 digits"),
-        ],
-    )
-
-    def clean(self):
-        # TODO: implement 2FA flow
-        return super().clean(
-            otp=self.cleaned_data["otp"],
-        )
-
-
-class DependentStudentUsernameCredentialsForm(BaseAuthForm):
+class UsernameAuthForm(BaseAuthForm):
     username = UsernameField()
     # TODO: use regex validator
     password = forms.CharField(strip=False)
@@ -92,7 +92,7 @@ class DependentStudentUsernameCredentialsForm(BaseAuthForm):
         return self.cleaned_data
 
 
-class DependentStudentUserIdCredentialsForm(BaseAuthForm):
+class UserIdAuthForm(BaseAuthForm):
     user_id = forms.IntegerField(min_value=1)
     login_id = forms.CharField(min_length=32, max_length=32)
 

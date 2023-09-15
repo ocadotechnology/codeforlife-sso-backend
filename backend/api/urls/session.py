@@ -1,11 +1,11 @@
 from django.contrib.auth.views import LogoutView
-from django.urls import path, re_path
+from django.urls import path
 
 from ..views.session import ClearExpiredView, LoginView
 
 urlpatterns = [
-    re_path(
-        r"^(?P<user_type>teacher|dependent-student|independent-student)/login/$",
+    path(
+        "login/",
         LoginView.as_view(),
         name="login",
     ),

@@ -151,6 +151,13 @@ SESSION_COOKIE_SECURE = True
 SESSION_COOKIE_SAMESITE = "None"
 SESSION_COOKIE_DOMAIN = "codeforlife.education"
 
+# CSRF
+# https://docs.djangoproject.com/en/3.2/ref/csrf/
+
+CSRF_COOKIE_NAME = "sso_csrftoken"
+CSRF_COOKIE_SAMESITE = "None"
+CSRF_COOKIE_SECURE = True
+
 # ------------------------------------------------------------------------------
 # Custom
 # ------------------------------------------------------------------------------

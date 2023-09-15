@@ -1,6 +1,4 @@
 import logging
-from enum import Enum
-from functools import cached_property
 
 # from codeforlife.user.models import User
 from codeforlife.mixins import CronMixin
@@ -13,39 +11,25 @@ from rest_framework.views import APIView
 
 from ..forms import (
     BaseAuthForm,
-    CredentialsForm,
-    DependentStudentUserIdCredentialsForm,
-    DependentStudentUsernameCredentialsForm,
-    OneTimePasswordForm,
+    EmailAuthForm,
+    OtpAuthForm,
+    UserIdAuthForm,
+    UsernameAuthForm,
 )
-
-
-# TODO: use User.Type from cfl package
-class UserType(str, Enum):
-    TEACHER = "teacher"
-    DEP_STUDENT = "dependent-student"
-    INDEP_STUDENT = "independent-student"
 
 
 # TODO: add 2FA logic
 class LoginView(_LoginView):
-    @cached_property
-    def user_type(self):
-        return UserType(self.kwargs["user_type"])
-
     def get_form_class(self):
-        if self.user_type == UserType.INDEP_STUDENT:
-            return CredentialsForm
-
-        elif self.user_type == UserType.DEP_STUDENT:
-            if "user_id" in self.request.POST:
-                return DependentStudentUserIdCredentialsForm
-            return DependentStudentUsernameCredentialsForm
-
-        else:  # user_type == UserType.TEACHER
-            if False:  # TODO: add 2fa logic.
-                return OneTimePasswordForm
-            return CredentialsForm
+        if "email" in self.request.POST:
+            return EmailAuthForm
+        elif "username" in self.request.POST:
+            return UsernameAuthForm
+        elif "user_id" in self.request.POST:
+            return UserIdAuthForm
+        elif "otp" in self.request.POST:  # TODO: add 2fa logic.
+            return OtpAuthForm
+        raise Exception()  # TODO: handle this
 
     def form_valid(self, form: BaseAuthForm):
         response = super().form_valid(form)
@@ -53,7 +37,7 @@ class LoginView(_LoginView):
         # TODO: use google analytics
         user = form.get_user()
         user_session = {"user": user}
-        if self.user_type == UserType.DEP_STUDENT:
+        if self.get_form_class() in [UsernameAuthForm, UserIdAuthForm]:
             user_session["class_field"] = user.new_student.class_field
             user_session["login_type"] = (
                 "direct" if "user_id" in self.request.POST else "classform"
