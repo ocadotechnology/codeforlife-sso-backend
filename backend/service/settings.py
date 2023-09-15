@@ -151,7 +151,7 @@ SESSION_SAVE_EVERY_REQUEST = True
 SESSION_EXPIRE_AT_BROWSER_CLOSE = True
 SESSION_COOKIE_SECURE = True
 SESSION_COOKIE_SAMESITE = "None"
-SESSION_COOKIE_DOMAIN = "codeforlife.education"
+SESSION_COOKIE_DOMAIN = "localhost" if DEBUG else "codeforlife.education"
 
 # CSRF
 # https://docs.djangoproject.com/en/3.2/ref/csrf/
