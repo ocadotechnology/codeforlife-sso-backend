@@ -43,9 +43,11 @@ INSTALLED_APPS = [
     "game",  # TODO: remove this
     "common",  # TODO: remove this
     "portal",  # TODO: remove this
+    "corsheaders",
 ]
 
 MIDDLEWARE = [
+    "corsheaders.middleware.CorsMiddleware",
     "django.middleware.security.SecurityMiddleware",
     "django.contrib.sessions.middleware.SessionMiddleware",
     "django.middleware.common.CommonMiddleware",
@@ -157,6 +159,13 @@ SESSION_COOKIE_DOMAIN = "codeforlife.education"
 CSRF_COOKIE_NAME = "sso_csrftoken"
 CSRF_COOKIE_SAMESITE = "None"
 CSRF_COOKIE_SECURE = True
+
+# CORS
+# https://pypi.org/project/django-cors-headers/
+
+CORS_ALLOW_ALL_ORIGINS = DEBUG
+CORS_ALLOW_CREDENTIALS = True
+CORS_ALLOWED_ORIGINS = []
 
 # ------------------------------------------------------------------------------
 # Custom

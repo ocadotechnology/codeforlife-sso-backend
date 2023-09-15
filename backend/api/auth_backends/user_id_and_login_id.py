@@ -5,7 +5,7 @@ from common.models import Student
 from django.contrib.auth import get_user_model
 from django.contrib.auth.backends import BaseBackend
 from django.contrib.auth.base_user import AbstractBaseUser
-from django.http.request import HttpRequest
+from django.core.handlers.wsgi import WSGIRequest
 
 User = get_user_model()
 
@@ -13,7 +13,7 @@ User = get_user_model()
 class UserIdAndLoginIdBackend(BaseBackend):
     def authenticate(
         self,
-        request: HttpRequest,
+        request: WSGIRequest,
         user_id: t.Optional[int] = None,
         login_id: t.Optional[str] = None,
         **kwargs

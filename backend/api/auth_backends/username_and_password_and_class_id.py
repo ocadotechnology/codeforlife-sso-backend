@@ -3,7 +3,7 @@ import typing as t
 from django.contrib.auth import get_user_model
 from django.contrib.auth.backends import BaseBackend
 from django.contrib.auth.base_user import AbstractBaseUser
-from django.http.request import HttpRequest
+from django.core.handlers.wsgi import WSGIRequest
 
 User = get_user_model()
 
@@ -11,7 +11,7 @@ User = get_user_model()
 class UsernameAndPasswordAndClassIdBackend(BaseBackend):
     def authenticate(
         self,
-        request: HttpRequest,
+        request: WSGIRequest,
         username: t.Optional[str] = None,
         password: t.Optional[str] = None,
         class_id: t.Optional[str] = None,

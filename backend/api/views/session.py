@@ -3,9 +3,11 @@ import logging
 # from codeforlife.user.models import User
 from codeforlife.mixins import CronMixin
 from common.models import UserSession
+from django.contrib.auth import login
 from django.contrib.auth.views import LoginView as _LoginView
 from django.contrib.sessions.models import Session, SessionManager
 from django.core.management import call_command
+from django.http import HttpResponse
 from rest_framework.response import Response
 from rest_framework.views import APIView
 
@@ -32,19 +34,18 @@ class LoginView(_LoginView):
         raise Exception()  # TODO: handle this
 
     def form_valid(self, form: BaseAuthForm):
-        response = super().form_valid(form)
+        login(self.request, form.user)
 
         # TODO: use google analytics
-        user = form.get_user()
-        user_session = {"user": user}
+        user_session = {"user": form.user}
         if self.get_form_class() in [UsernameAuthForm, UserIdAuthForm]:
-            user_session["class_field"] = user.new_student.class_field
+            user_session["class_field"] = form.user.new_student.class_field
             user_session["login_type"] = (
                 "direct" if "user_id" in self.request.POST else "classform"
             )
         UserSession.objects.create(**user_session)
 
-        return response
+        return HttpResponse()
 
 
 class ClearExpiredView(CronMixin, APIView):

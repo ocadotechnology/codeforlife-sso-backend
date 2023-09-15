@@ -7,6 +7,7 @@ name = "pypi"
 codeforlife = {ref = "v0.6.7", git = "https://github.com/ocadotechnology/codeforlife-package-python.git"}
 django = "==3.2.20"
 djangorestframework = "==3.13.1"
+django-cors-headers = "==4.1.0"
 # https://pypi.org/user/codeforlife/
 cfl-common = "==6.36.0" # TODO: remove
 codeforlife-portal = "==6.36.0" # TODO: remove
