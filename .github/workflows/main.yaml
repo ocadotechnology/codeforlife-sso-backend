@@ -11,7 +11,7 @@ on:
   workflow_dispatch:
 
 env:
-  SERVICE: sso
+  SERVICE_NAME: sso
   PYTHON_VERSION: 3.8
 
 jobs:
@@ -37,6 +37,7 @@ jobs:
         working-directory: ./backend
         run: if ! pipenv run black --check .; then exit 1; fi
   
+      # TODO: figure out why migrations are out of sync in old repos.
       # - name: Check Migrations
       #   working-directory: ./backend
       #   run: pipenv run python manage.py makemigrations --check --dry-run
@@ -49,20 +50,8 @@ jobs:
   build-and-deploy:
     runs-on: ubuntu-latest
     needs: [test]
-    # if: github.ref_name == 'production' || github.ref_name == 'development' || github.ref_name == 'staging'
+    if: github.ref_name == 'production' || github.ref_name == 'development' || github.ref_name == 'staging'
     steps:
-      # - name: ⚙️ Set up Environment Variables
-      #   run: |
-      #     echo "SERVICE_BASE_ROUTE=$(
-      #       if [ "${{ github.ref_name }}" == "production" ]
-      #       then echo "sso"
-      #       else echo "${{ github.ref_name }}-sso/"
-      #       fi
-      #     )" >> $GITHUB_ENV
-      - name: ⚙️ Set up Environment Variables
-        run: |
-          echo "SERVICE_BASE_ROUTE=sso/" >> $GITHUB_ENV
-
       - name: 🛫 Checkout
         uses: actions/checkout@v3
 
@@ -95,9 +84,16 @@ jobs:
         uses: mikefarah/yq@master
         with:
           cmd: |
+            SERVICE_NAME=$(
+              if [ ${{ github.ref_name }} == "production" ]
+              then echo ${{ env.SERVICE_NAME }}
+              else echo ${{ github.ref_name }}-${{ env.SERVICE_NAME }}
+              fi
+            )
+
             yq -i '
-              .service = "production-${{ env.SERVICE }}" |
-              .env_variables.SERVICE_BASE_ROUTE = "${{ env.SERVICE_BASE_ROUTE }}"
+              .service = "${{ github.ref_name }}-${{ env.SERVICE_NAME }}" |
+              .env_variables.SERVICE_NAME = "$SERVICE_NAME"
             ' backend/app.yaml
 
       - name: 🚀 Deploy App on GCloud
