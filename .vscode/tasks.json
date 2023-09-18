@@ -13,12 +13,15 @@
       "label": "migrate-db",
       "type": "shell",
       "options": {
-        "cwd": "${workspaceFolder}/backend"
+        "cwd": "${workspaceFolder}/backend",
+        "env": {
+          "SERVICE_NAME": "sso"
+        }
       },
       "dependsOn": [
         "install-dev-deps"
       ],
-      "command": "pipenv run ./manage.py migrate"
+      "command": "pipenv run python ./manage.py migrate"
     }
   ]
 }

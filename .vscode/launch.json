@@ -15,7 +15,10 @@
         "runserver",
         "localhost:8001"
       ],
-      "preLaunchTask": "migrate-db"
+      "preLaunchTask": "migrate-db",
+      "env": {
+        "SERVICE_NAME": "sso"
+      }
     },
     {
       "name": "Pytest",
