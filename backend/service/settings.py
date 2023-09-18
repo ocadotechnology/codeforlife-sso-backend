@@ -16,16 +16,6 @@ from pathlib import Path
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
-
-# Quick-start development settings - unsuitable for production
-# See https://docs.djangoproject.com/en/3.2/howto/deployment/checklist/
-
-# SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = "replace-me-and-put-me-in-a-github-secret"
-
-# SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = bool(int(os.getenv("DEBUG", "1")))
-
 ALLOWED_HOSTS = ["*"]
 
 # Application definition
@@ -37,7 +27,7 @@ INSTALLED_APPS = [
     "django.contrib.sessions",
     "django.contrib.messages",
     "django.contrib.staticfiles",
-    # "codeforlife",
+    "codeforlife",
     "api",
     "aimmo",  # TODO: remove this
     "game",  # TODO: remove this
@@ -105,15 +95,6 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
-# Internationalization
-# https://docs.djangoproject.com/en/3.2/topics/i18n/
-
-LANGUAGE_CODE = "en-us"
-TIME_ZONE = "UTC"
-USE_I18N = True
-USE_L10N = True
-USE_TZ = True
-
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/3.2/howto/static-files/
 
@@ -121,48 +102,5 @@ STATIC_ROOT = BASE_DIR / "static"
 STATIC_URL = "/static/"
 STATICFILES_DIRS = [BASE_DIR / "myapp/static"]
 
-# Default primary key field type
-# https://docs.djangoproject.com/en/3.2/ref/settings/#default-auto-field
 
-DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
-
-# Authentication backends
-# https://docs.djangoproject.com/en/4.2/ref/settings/#authentication-backends
-
-AUTHENTICATION_BACKENDS = [
-    "api.auth_backends.EmailAndPasswordBackend",
-    "api.auth_backends.UserIdAndLoginIdBackend",
-    "api.auth_backends.UsernameAndPasswordAndClassIdBackend",
-]
-
-# Sessions
-# https://docs.djangoproject.com/en/3.2/topics/http/sessions/
-
-SESSION_COOKIE_AGE = 60 * 60
-SESSION_SAVE_EVERY_REQUEST = True
-SESSION_EXPIRE_AT_BROWSER_CLOSE = True
-SESSION_COOKIE_SECURE = True
-SESSION_COOKIE_SAMESITE = "None"
-SESSION_COOKIE_DOMAIN = "localhost" if DEBUG else "codeforlife.education"
-
-# CSRF
-# https://docs.djangoproject.com/en/3.2/ref/csrf/
-
-CSRF_COOKIE_NAME = "sso_csrftoken"
-CSRF_COOKIE_SAMESITE = "None"
-CSRF_COOKIE_SECURE = True
-
-# CORS
-# https://pypi.org/project/django-cors-headers/
-
-CORS_ALLOW_ALL_ORIGINS = DEBUG
-CORS_ALLOW_CREDENTIALS = True
-CORS_ALLOWED_ORIGINS = []
-
-# ------------------------------------------------------------------------------
-# Custom
-# ------------------------------------------------------------------------------
-
-# Service
-
-SERVICE_BASE_ROUTE = os.getenv("SERVICE_BASE_ROUTE", "sso/")
+from codeforlife.settings import *

@@ -1,6 +1,5 @@
 import logging
 
-# from codeforlife.user.models import User
 from codeforlife.mixins import CronMixin
 from common.models import UserSession
 from django.contrib.auth import login
@@ -12,7 +11,7 @@ from rest_framework import status
 from rest_framework.response import Response
 from rest_framework.views import APIView
 
-from ..forms import (
+from .forms import (
     BaseAuthForm,
     EmailAuthForm,
     OtpAuthForm,

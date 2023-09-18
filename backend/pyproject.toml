@@ -2,4 +2,4 @@
 line-length = 80
 
 [tool.pytest.ini_options]
-env = ["DJANGO_SETTINGS_MODULE=service.settings"]
+env = ["DJANGO_SETTINGS_MODULE=service.settings", "SERVICE_NAME=sso"]
