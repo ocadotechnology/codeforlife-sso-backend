@@ -14,6 +14,12 @@ class BaseAuthForm(forms.Form):
         super().__init__(*args, **kwargs)
 
     def clean(self):
+        if self.errors:
+            raise ValidationError(
+                "Found form errors. Skipping authentication.",
+                code="form_errors",
+            )
+
         self.user = authenticate(
             self.request,
             **{key: self.cleaned_data[key] for key in self.fields.keys()}
@@ -23,7 +29,11 @@ class BaseAuthForm(forms.Form):
                 self.get_invalid_login_error_message(),
                 code="invalid_login",
             )
-        # TODO: confirm if we should return error message if is_active=False
+        elif not self.user.is_active:
+            raise ValidationError(
+                "User is not active",
+                code="user_not_active",
+            )
 
         return self.cleaned_data
 
