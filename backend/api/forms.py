@@ -51,7 +51,6 @@ class OtpAuthForm(BaseAuthForm):
 
 class EmailAuthForm(BaseAuthForm):
     email = forms.EmailField()
-    # TODO: use regex validator
     password = forms.CharField(strip=False)
 
     def get_invalid_login_error_message(self):
@@ -63,7 +62,6 @@ class EmailAuthForm(BaseAuthForm):
 
 class UsernameAuthForm(BaseAuthForm):
     username = UsernameField()
-    # TODO: use regex validator
     password = forms.CharField(strip=False)
     class_id = forms.CharField(
         validators=[
