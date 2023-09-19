@@ -8,4 +8,5 @@ inbound_services:
 env_variables:
   DEBUG: "0"
   DJANGO_SETTINGS_MODULE: "service.settings"
-  SERVICE_NAME: REPLACE_ME
+  SECRET_KEY: "REPLACE_ME"
+  SERVICE_NAME: "REPLACE_ME"
