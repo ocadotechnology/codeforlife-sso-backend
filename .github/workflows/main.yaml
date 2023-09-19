@@ -36,11 +36,11 @@ jobs:
       - name: Check Code Format
         working-directory: ./backend
         run: if ! pipenv run black --check .; then exit 1; fi
-  
+
       - name: Check Migrations
         working-directory: ./backend
         run: pipenv run python manage.py makemigrations --check --dry-run
-  
+
       # TODO: assert code coverage target.
       - name: Test Code Units
         working-directory: ./backend
