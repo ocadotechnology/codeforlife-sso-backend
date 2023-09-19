@@ -1,7 +1,7 @@
 {
     "_meta": {
         "hash": {
-            "sha256": "ccf7cbfe76df991491b5affd246869d1c4323d446b496b839f707ccd4f0aef53"
+            "sha256": "5dda424ef60b78cf356a5179a08f00e61cd15709c3a5887fe028dd935bdbeadf"
         },
         "pipfile-spec": 6,
         "requires": {
@@ -155,7 +155,7 @@
         },
         "codeforlife": {
             "git": "https://github.com/ocadotechnology/codeforlife-package-python.git",
-            "ref": "3b1b50ca886e5d860093fd3cfa55be204843dba1"
+            "ref": "0acc651119ed7e0c2403188b2e4d0ba4fbcbe76c"
         },
         "codeforlife-portal": {
             "hashes": [
