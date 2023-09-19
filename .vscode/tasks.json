@@ -13,10 +13,7 @@
       "label": "migrate-db",
       "type": "shell",
       "options": {
-        "cwd": "${workspaceFolder}/backend",
-        "env": {
-          "SERVICE_NAME": "sso"
-        }
+        "cwd": "${workspaceFolder}/backend"
       },
       "dependsOn": [
         "install-dev-deps"
