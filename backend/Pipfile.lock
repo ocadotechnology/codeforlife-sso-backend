@@ -1,7 +1,7 @@
 {
     "_meta": {
         "hash": {
-            "sha256": "5dda424ef60b78cf356a5179a08f00e61cd15709c3a5887fe028dd935bdbeadf"
+            "sha256": "e74bb8111e2f3b8700fced5ce7daacc63acee1f5fa28338e407d4f907f015f9b"
         },
         "pipfile-spec": 6,
         "requires": {
@@ -58,11 +58,11 @@
         },
         "cfl-common": {
             "hashes": [
-                "sha256:6eb1a349e770187c32e075b93b059df9eff0ae42e3abdd98b5fb6e05e9abb465",
-                "sha256:8ea2b387c91a14da0a03bf1808b5b002a76138c89f23723530911d1c0dc28730"
+                "sha256:171e5607e7704e7f979d947226c681c1672c1f038116c0ed69b1fe57c2eb1eac",
+                "sha256:8fd9b61f1f6b70a1f8957ed65c5ff42fa6c6b6fedbf1b34cdeae0df563844d9f"
             ],
             "index": "pypi",
-            "version": "==6.36.0"
+            "version": "==6.36.2"
         },
         "charset-normalizer": {
             "hashes": [
@@ -155,15 +155,15 @@
         },
         "codeforlife": {
             "git": "https://github.com/ocadotechnology/codeforlife-package-python.git",
-            "ref": "0acc651119ed7e0c2403188b2e4d0ba4fbcbe76c"
+            "ref": "51fd3eb37aa2d880172255972df44c00a1963699"
         },
         "codeforlife-portal": {
             "hashes": [
-                "sha256:5e1882e9adec7d767d922cec4cc893d969a08f1ec042394a2f607b31fb9cc087",
-                "sha256:6d7dfb1ab298e38de27a177598036ed57f1cfa8307481b34d02bf61070057e81"
+                "sha256:be6a245d3a7156d6ae019874f31e57a6a73666c7f44bef5ae84bfe4f43279876",
+                "sha256:cb54c8373997d73af8fe548ee84a363427d865206614452c55d2fb0b146d7caf"
             ],
             "index": "pypi",
-            "version": "==6.36.0"
+            "version": "==6.36.2"
         },
         "defusedxml": {
             "hashes": [
@@ -1047,11 +1047,11 @@
         },
         "zipp": {
             "hashes": [
-                "sha256:679e51dd4403591b2d6838a48de3d283f3d188412a9782faadf845f298736ba0",
-                "sha256:ebc15946aa78bd63458992fc81ec3b6f7b1e92d51c35e6de1c3804e73b799147"
+                "sha256:0e923e726174922dce09c53c59ad483ff7bbb8e572e00c7f7c46b88556409f31",
+                "sha256:84e64a1c28cf7e91ed2078bb8cc8c259cb19b76942096c8d7b84947690cabaf0"
             ],
             "markers": "python_version >= '3.8'",
-            "version": "==3.16.2"
+            "version": "==3.17.0"
         }
     },
     "develop": {
