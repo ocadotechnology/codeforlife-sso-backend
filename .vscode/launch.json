@@ -17,7 +17,8 @@
       ],
       "preLaunchTask": "migrate-db",
       "env": {
-        "SERVICE_NAME": "sso"
+        "SERVICE_NAME": "sso",
+        "SERVICE_PORT": "8001"
       }
     },
     {
