@@ -37,7 +37,7 @@ class BaseAuthForm(forms.Form):
 
         return self.cleaned_data
 
-    def get_invalid_login_error_message(self) -> str:
+    def get_invalid_login_error_message(self):
         raise NotImplementedError()
 
 
@@ -48,7 +48,7 @@ class OtpAuthForm(BaseAuthForm):
         ],
     )
 
-    def get_invalid_login_error_message(self) -> str:
+    def get_invalid_login_error_message(self):
         return "Please enter the correct one-time password."
 
 
