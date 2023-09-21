@@ -48,6 +48,9 @@ class OtpAuthForm(BaseAuthForm):
         ],
     )
 
+    def get_invalid_login_error_message(self) -> str:
+        return "Please enter the correct one-time password."
+
 
 class EmailAuthForm(BaseAuthForm):
     email = forms.EmailField()
@@ -56,7 +59,7 @@ class EmailAuthForm(BaseAuthForm):
     def get_invalid_login_error_message(self):
         return (
             "Please enter a correct username and password. Note that both"
-            " fields may be case-sensitive."
+            " fields are case-sensitive."
         )
 
 
@@ -66,13 +69,29 @@ class UsernameAuthForm(BaseAuthForm):
     class_id = forms.CharField(
         validators=[
             RegexValidator(
-                r"^[A-Z]{2}[0-9]{3}$",
-                "Must be 2 upper case letters followed by 3 digits",
+                r"^[A-Z]{2}([0-9]{3}|[A-Z]{3})$",
+                (
+                    "Must be 5 upper case letters or 2 upper case letters"
+                    " followed by 3 digits"
+                ),
             ),
         ],
     )
+
+    def get_invalid_login_error_message(self):
+        return (
+            "Please enter a correct username and password for a class."
+            " Double check your class ID is correct and remember that your"
+            " username and password are case-sensitive."
+        )
 
 
 class UserIdAuthForm(BaseAuthForm):
     user_id = forms.IntegerField(min_value=1)
     login_id = forms.CharField(min_length=32, max_length=32)
+
+    def get_invalid_login_error_message(self):
+        return (
+            "Your login link is invalid. Please contact your teacher or the"
+            " Code for Life team for support."
+        )
