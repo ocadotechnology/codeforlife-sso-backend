@@ -5,11 +5,30 @@
   "version": "0.2.0",
   "configurations": [
     {
-      "type": "chrome",
+      "name": "Django Server",
+      "type": "python",
       "request": "launch",
-      "name": "Launch Chrome",
-      "url": "http://localhost:3000",
-      "webRoot": "${workspaceFolder}/src"
+      "django": true,
+      "justMyCode": false,
+      "program": "${workspaceFolder}/backend/manage.py",
+      "args": [
+        "runserver",
+        "localhost:8001"
+      ],
+      "preLaunchTask": "migrate-db",
+      "env": {
+        "SERVICE_NAME": "sso",
+        "SERVICE_PORT": "8001"
+      }
+    },
+    {
+      "name": "Pytest",
+      "type": "python",
+      "request": "test",
+      "justMyCode": false,
+      "presentation": {
+        "hidden": true
+      }
     }
   ]
 }

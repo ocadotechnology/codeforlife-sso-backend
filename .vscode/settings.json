@@ -1,5 +1,12 @@
 {
-    "editor.tabSize": 2,
-    "javascript.preferences.quoteStyle": "single",
-    "typescript.preferences.quoteStyle": "single"
+  "black-formatter.args": [
+    "--config",
+    "backend/pyproject.toml"
+  ],
+  "python.testing.pytestArgs": [
+    "-c=backend/pyproject.toml",
+    "backend"
+  ],
+  "python.testing.unittestEnabled": false,
+  "python.testing.pytestEnabled": true
 }
