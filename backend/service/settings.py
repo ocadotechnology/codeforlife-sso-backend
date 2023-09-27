@@ -27,7 +27,7 @@ INSTALLED_APPS = [
     "django.contrib.sessions",
     "django.contrib.messages",
     "django.contrib.staticfiles",
-    "codeforlife",
+    "codeforlife.user",
     "api",
     "aimmo",  # TODO: remove this
     "game",  # TODO: remove this
