@@ -37,6 +37,7 @@ class LoginView(_LoginView):
             return OtpAuthForm
 
     def form_valid(self, form: BaseAuthForm):
+        # Create session (without data).
         login(self.request, form.user)
 
         # TODO: use google analytics
@@ -48,10 +49,15 @@ class LoginView(_LoginView):
             )
         UserSession.objects.create(**user_session)
 
+        # Save session (with data).
+        self.request.session.save()
+
         return JsonResponse(
             {
-                "session_auth_factors": list(
-                    self.request.user.session.session_auth_factors
+                "session_auth_factors": (
+                    self.request.user.session.session_auth_factors.values_list(
+                        "auth_factor__type", flat=True
+                    )
                 )
             }
         )
