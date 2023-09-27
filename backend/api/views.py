@@ -1,12 +1,13 @@
 import logging
 
 from codeforlife.mixins import CronMixin
+from codeforlife.request import HttpRequest
 from common.models import UserSession
 from django.contrib.auth import login
 from django.contrib.auth.views import LoginView as _LoginView
 from django.contrib.sessions.models import Session, SessionManager
 from django.core.management import call_command
-from django.http import HttpResponse, JsonResponse
+from django.http import JsonResponse
 from rest_framework import status
 from rest_framework.response import Response
 from rest_framework.views import APIView
@@ -22,6 +23,8 @@ from .forms import (
 
 # TODO: add 2FA logic
 class LoginView(_LoginView):
+    request: HttpRequest
+
     def get_form_class(self):
         form = self.kwargs["form"]
         if form == "email":
@@ -30,7 +33,7 @@ class LoginView(_LoginView):
             return UsernameAuthForm
         elif form == "user-id":
             return UserIdAuthForm
-        elif form == "otp":  # TODO: add 2fa logic.
+        elif form == "otp":
             return OtpAuthForm
 
     def form_valid(self, form: BaseAuthForm):
@@ -45,7 +48,13 @@ class LoginView(_LoginView):
             )
         UserSession.objects.create(**user_session)
 
-        return HttpResponse()
+        return JsonResponse(
+            {
+                "session_auth_factors": list(
+                    self.request.user.session.session_auth_factors
+                )
+            }
+        )
 
     def form_invalid(self, form: BaseAuthForm):
         return JsonResponse(form.errors, status=status.HTTP_400_BAD_REQUEST)
