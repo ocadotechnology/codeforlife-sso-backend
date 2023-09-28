@@ -4,10 +4,17 @@ verify_ssl = true
 name = "pypi"
 
 [packages]
+# TODO: use actual version
 codeforlife = {ref = "otp", git = "https://github.com/ocadotechnology/codeforlife-package-python.git"}
 django = "==3.2.20"
 djangorestframework = "==3.13.1"
 django-cors-headers = "==4.1.0"
+# https://pypi.org/user/codeforlife/
+cfl-common = "==6.37.1" # TODO: remove
+codeforlife-portal = "==6.37.1" # TODO: remove
+aimmo = "==2.10.6" # TODO: remove
+rapid-router = "==5.11.3" # TODO: remove
+phonenumbers = "==8.12.12" # TODO: remove
 
 [dev-packages]
 black = "*"

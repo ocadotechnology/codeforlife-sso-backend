@@ -54,7 +54,7 @@ class LoginView(_LoginView):
 
         return JsonResponse(
             {
-                "session_auth_factors": (
+                "auth_factors": list(
                     self.request.user.session.session_auth_factors.values_list(
                         "auth_factor__type", flat=True
                     )
