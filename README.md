@@ -1,3 +1,3 @@
-# codeforlife-service-template
+# codeforlife-sso
 
-[Frontend Docs](docs/frontend)
+This repo contains CFL's Single Sign-On (SSO) service. This will be responsible for authenticating users.
