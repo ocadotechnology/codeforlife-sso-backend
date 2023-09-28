@@ -11,7 +11,7 @@ on:
   workflow_dispatch:
 
 env:
-  SERVICE_NAME: sso
+  SERVICE: sso
   PYTHON_VERSION: 3.8
 
 jobs:
@@ -79,22 +79,24 @@ jobs:
         working-directory: ./backend
         run: pipenv requirements > requirements.txt
 
+      - name: ⚙️ Set Service Name
+        run: |
+          echo "SERVICE_NAME=$(
+            if [ ${{ github.ref_name }} == 'production' ]
+            then echo ${{ env.SERVICE }}
+            else echo ${{ github.ref_name }}-${{ env.SERVICE }}
+            fi
+          )" >> $GITHUB_ENV
+
       # https://mikefarah.gitbook.io/yq/
       - name: 🖊️ Configure App Deployment
         uses: mikefarah/yq@master
         with:
           cmd: |
-            SERVICE_NAME=$(
-              if [ ${{ github.ref_name }} == "production" ]
-              then echo ${{ env.SERVICE_NAME }}
-              else echo ${{ github.ref_name }}-${{ env.SERVICE_NAME }}
-              fi
-            )
-
             yq -i '
-              .service = "${{ github.ref_name }}-${{ env.SERVICE_NAME }}" |
-              .env_variables.SECRET_KEY = "${{ vars.SECRET_KEY }}" |
-              .env_variables.SERVICE_NAME = "$SERVICE_NAME"
+              .service = "${{ github.ref_name }}-${{ env.SERVICE }}" |
+              .env_variables.SECRET_KEY = "${{ secrets.SECRET_KEY }}" |
+              .env_variables.SERVICE_NAME = "${{ env.SERVICE_NAME }}"
             ' backend/app.yaml
 
       - name: 🚀 Deploy App on GCloud
