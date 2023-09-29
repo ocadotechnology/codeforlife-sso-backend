@@ -155,7 +155,7 @@
         },
         "codeforlife": {
             "git": "https://github.com/ocadotechnology/codeforlife-package-python.git",
-            "ref": "89f39c158a391571d6c928932c7c6391d22da030"
+            "ref": "e98ef041ee93534a54b8e14b44fe44655146a2fe"
         },
         "codeforlife-portal": {
             "hashes": [
