@@ -63,6 +63,13 @@ class EmailAuthForm(BaseAuthForm):
         )
 
 
+class TokenAuthForm(BaseAuthForm):
+    token = forms.CharField(min_length=8, max_length=8)
+
+    def get_invalid_login_error_message(self):
+        return "Must be exactly 8 characters. A token can only be used once."
+
+
 class UsernameAuthForm(BaseAuthForm):
     username = UsernameField()
     password = forms.CharField(strip=False)

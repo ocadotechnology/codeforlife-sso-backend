@@ -16,6 +16,7 @@ from .forms import (
     BaseAuthForm,
     EmailAuthForm,
     OtpAuthForm,
+    TokenAuthForm,
     UserIdAuthForm,
     UsernameAuthForm,
 )
@@ -35,6 +36,8 @@ class LoginView(_LoginView):
             return UserIdAuthForm
         elif form == "otp":
             return OtpAuthForm
+        elif form == "token":
+            return TokenAuthForm
 
     def form_valid(self, form: BaseAuthForm):
         # Create session (without data).
