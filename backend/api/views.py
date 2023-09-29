@@ -40,6 +40,9 @@ class LoginView(_LoginView):
             return TokenAuthForm
 
     def form_valid(self, form: BaseAuthForm):
+        # Clear expired sessions.
+        self.request.session.clear_expired(form.user.id)
+
         # Create session (without data).
         login(self.request, form.user)
 
