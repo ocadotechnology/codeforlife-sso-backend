@@ -6,7 +6,7 @@ from common.models import UserSession
 from django.contrib.auth import login
 from django.contrib.auth.views import LoginView as _LoginView
 from django.contrib.sessions.models import Session, SessionManager
-from django.core.management import call_command
+from django.core import management
 from django.http import JsonResponse
 from rest_framework import status
 from rest_framework.response import Response
@@ -82,7 +82,7 @@ class ClearExpiredView(CronMixin, APIView):
 
         # Clears expired sessions.
         # https://docs.djangoproject.com/en/3.2/ref/django-admin/#clearsessions
-        call_command("clearsessions")
+        management.call_command("clearsessions")
 
         after_session_count = session_objects.count()
         logging.info(f"Session count after clearance: {after_session_count}")

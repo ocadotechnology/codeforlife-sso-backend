@@ -1,8 +1,9 @@
-from unittest.mock import Mock, patch
+from unittest.mock import patch
 
 import pyotp
 from codeforlife.tests import CronTestCase
 from codeforlife.user.models import AuthFactor, User
+from django.core import management
 from django.test import TestCase
 from django.urls import reverse
 from django.utils import timezone
@@ -48,8 +49,7 @@ class TestLoginView(TestCase):
 
 
 class TestClearExpiredView(CronTestCase):
-    @patch("django.core.management.call_command")
-    def test_clear_expired_view(self, call_command: Mock):
-        self.client.get(reverse("clear-expired-sessions"))
-
-        call_command.assert_called_once_with("clearsessions")
+    def test_clear_expired_view(self):
+        with patch.object(management, "call_command") as call_command:
+            self.client.get(reverse("clear-expired-sessions"))
+            call_command.assert_called_once_with("clearsessions")
