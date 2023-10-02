@@ -29,7 +29,11 @@ class TestLoginView(TestCase):
 
         assert response.status_code == 200
         self.assertDictEqual(
-            response.json(), {"auth_factors": [AuthFactor.Type.OTP]}
+            response.json(),
+            {
+                "auth_factors": [AuthFactor.Type.OTP],
+                "otp_bypass_token_exists": False,
+            },
         )
 
         self.user.userprofile.otp_secret = pyotp.random_base32()
@@ -45,7 +49,13 @@ class TestLoginView(TestCase):
             )
 
         assert response.status_code == 200
-        self.assertDictEqual(response.json(), {"auth_factors": []})
+        self.assertDictEqual(
+            response.json(),
+            {
+                "auth_factors": [],
+                "otp_bypass_token_exists": False,
+            },
+        )
 
 
 class TestClearExpiredView(CronTestCase):
