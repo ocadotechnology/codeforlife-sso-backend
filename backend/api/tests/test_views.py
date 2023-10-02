@@ -51,10 +51,7 @@ class TestLoginView(TestCase):
         assert response.status_code == 200
         self.assertDictEqual(
             response.json(),
-            {
-                "auth_factors": [],
-                "otp_bypass_token_exists": False,
-            },
+            {"auth_factors": []},
         )
 
 
