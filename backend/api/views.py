@@ -64,8 +64,7 @@ class LoginView(_LoginView):
                 self.request.user.session.session_auth_factors.values_list(
                     "auth_factor__type", flat=True
                 )
-            ),
-            "otp_bypass_token_exists": False,
+            )
         }
 
         if AuthFactor.Type.OTP in response_data["auth_factors"]:
