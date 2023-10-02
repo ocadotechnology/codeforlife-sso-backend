@@ -11,5 +11,5 @@ env_variables:
   SECRET_KEY: "REPLACE_ME"
   SERVICE_NAME: "REPLACE_ME"
   SERVICE_PROTOCOL: "https"
-  SERVICE_DOMAIN: "codeforlife.education"
+  SERVICE_DOMAIN: "www.codeforlife.education"
   SERVICE_PORT: "443"

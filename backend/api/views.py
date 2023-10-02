@@ -1,12 +1,13 @@
 import logging
 
 from codeforlife.mixins import CronMixin
+from codeforlife.request import HttpRequest
 from common.models import UserSession
 from django.contrib.auth import login
 from django.contrib.auth.views import LoginView as _LoginView
 from django.contrib.sessions.models import Session, SessionManager
-from django.core.management import call_command
-from django.http import HttpResponse, JsonResponse
+from django.core import management
+from django.http import JsonResponse
 from rest_framework import status
 from rest_framework.response import Response
 from rest_framework.views import APIView
@@ -15,6 +16,7 @@ from .forms import (
     BaseAuthForm,
     EmailAuthForm,
     OtpAuthForm,
+    OtpBypassTokenAuthForm,
     UserIdAuthForm,
     UsernameAuthForm,
 )
@@ -22,6 +24,8 @@ from .forms import (
 
 # TODO: add 2FA logic
 class LoginView(_LoginView):
+    request: HttpRequest
+
     def get_form_class(self):
         form = self.kwargs["form"]
         if form == "email":
@@ -30,10 +34,16 @@ class LoginView(_LoginView):
             return UsernameAuthForm
         elif form == "user-id":
             return UserIdAuthForm
-        elif form == "otp":  # TODO: add 2fa logic.
+        elif form == "otp":
             return OtpAuthForm
+        elif form == "otp-bypass-token":
+            return OtpBypassTokenAuthForm
 
     def form_valid(self, form: BaseAuthForm):
+        # Clear expired sessions.
+        self.request.session.clear_expired(form.user.id)
+
+        # Create session (without data).
         login(self.request, form.user)
 
         # TODO: use google analytics
@@ -45,7 +55,18 @@ class LoginView(_LoginView):
             )
         UserSession.objects.create(**user_session)
 
-        return HttpResponse()
+        # Save session (with data).
+        self.request.session.save()
+
+        return JsonResponse(
+            {
+                "auth_factors": list(
+                    self.request.user.session.session_auth_factors.values_list(
+                        "auth_factor__type", flat=True
+                    )
+                )
+            }
+        )
 
     def form_invalid(self, form: BaseAuthForm):
         return JsonResponse(form.errors, status=status.HTTP_400_BAD_REQUEST)
@@ -61,7 +82,7 @@ class ClearExpiredView(CronMixin, APIView):
 
         # Clears expired sessions.
         # https://docs.djangoproject.com/en/3.2/ref/django-admin/#clearsessions
-        call_command("clearsessions")
+        management.call_command("clearsessions")
 
         after_session_count = session_objects.count()
         logging.info(f"Session count after clearance: {after_session_count}")

@@ -8,7 +8,7 @@ urlpatterns = [
         include(
             [
                 re_path(
-                    r"^login/(?P<form>email|username|user-id|otp)/$",
+                    r"^login/(?P<form>email|username|user-id|otp|otp-bypass-token)/$",
                     LoginView.as_view(),
                     name="login",
                 ),

@@ -1,7 +1,7 @@
 {
     "_meta": {
         "hash": {
-            "sha256": "7d15e3872ed95caf61ff18fd285883eb2509ce0bdbe6f908328de72924b53036"
+            "sha256": "9b5dd7292210fab043685afe18e5fc517103bc85902a80699ebf09b26c760ee3"
         },
         "pipfile-spec": 6,
         "requires": {
@@ -58,11 +58,11 @@
         },
         "cfl-common": {
             "hashes": [
-                "sha256:171e5607e7704e7f979d947226c681c1672c1f038116c0ed69b1fe57c2eb1eac",
-                "sha256:8fd9b61f1f6b70a1f8957ed65c5ff42fa6c6b6fedbf1b34cdeae0df563844d9f"
+                "sha256:24045d5550c741249a1d466cfb90149883454833accb48bbdb1aceec51e885c1",
+                "sha256:e28553af70dc4388fc73a6dfb4ece08e8518f21531d63213b448d24a5c0abef3"
             ],
             "index": "pypi",
-            "version": "==6.36.2"
+            "version": "==6.37.1"
         },
         "charset-normalizer": {
             "hashes": [
@@ -155,15 +155,15 @@
         },
         "codeforlife": {
             "git": "https://github.com/ocadotechnology/codeforlife-package-python.git",
-            "ref": "d8a3f6963507996d862011604786b2e0c3d63d70"
+            "ref": "5fb23069bb2ca1ccd9a1e9e5d3db1841d2758fd1"
         },
         "codeforlife-portal": {
             "hashes": [
-                "sha256:be6a245d3a7156d6ae019874f31e57a6a73666c7f44bef5ae84bfe4f43279876",
-                "sha256:cb54c8373997d73af8fe548ee84a363427d865206614452c55d2fb0b146d7caf"
+                "sha256:3c31ac0135af0cd78ec39e1b3e32ba98e514c05d944447e504002c000ce6b334",
+                "sha256:63a234390da9728139de7fbe8a4da9f4ca4b4b24d37c4bed248e5d49af563e53"
             ],
             "index": "pypi",
-            "version": "==6.36.2"
+            "version": "==6.37.1"
         },
         "defusedxml": {
             "hashes": [
@@ -223,7 +223,6 @@
                 "sha256:304fa777b8ef9e0693ce7833f885cb89ba46b0e46fc23b01176900a93f46742f",
                 "sha256:c5272c03c1cd51b2375abf7397a199a3148a9fbbf2f100e186467a84025d13b2"
             ],
-            "markers": "python_version >= '3.7'",
             "version": "==2.2"
         },
         "django-import-export": {
@@ -246,7 +245,6 @@
                 "sha256:8ba5ab9bd2738c7321376c349d7cce49cf4404e79f6804e0a3cc462a91728e18",
                 "sha256:f523fb9dec420f28a29d3e2ad72ac06f64588956ed4f2b5b430d8e957ebb8287"
             ],
-            "markers": "python_version >= '3.7'",
             "version": "==1.0.2"
         },
         "django-phonenumber-field": {
@@ -345,11 +343,11 @@
         },
         "google-auth": {
             "hashes": [
-                "sha256:ce311e2bc58b130fddf316df57c9b3943c2a7b4f6ec31de9663a9333e4064efc",
-                "sha256:f586b274d3eb7bd932ea424b1c702a30e0393a2e2bc4ca3eae8263ffd8be229f"
+                "sha256:9800802266366a2a87890fb2d04923fc0c0d4368af0b86db18edd94a62386ea1",
+                "sha256:d38bdf4fa1e7c5a35e574861bce55784fd08afadb4e48f99f284f1e487ce702d"
             ],
-            "markers": "python_version >= '2.7' and python_version not in '3.0, 3.1, 3.2, 3.3, 3.4, 3.5'",
-            "version": "==2.17.3"
+            "markers": "python_version >= '3.7'",
+            "version": "==2.23.1"
         },
         "greenlet": {
             "hashes": [
@@ -614,6 +612,7 @@
                 "sha256:a6f5977418eff3b2d5500d54d9db50c8277a368436f4e4f8ddb1be3422870184",
                 "sha256:f91456ead12ab3c6c2e9491cf33ba6d08357d802192379bb482f1033ade496f5"
             ],
+            "markers": "python_version >= '3.6'",
             "version": "==3.1.2"
         },
         "pandas": {
@@ -796,6 +795,14 @@
             ],
             "markers": "python_version >= '3.7'",
             "version": "==2.6.0"
+        },
+        "pyotp": {
+            "hashes": [
+                "sha256:346b6642e0dbdde3b4ff5a930b664ca82abfa116356ed48cc42c7d6590d36f63",
+                "sha256:81c2e5865b8ac55e825b0358e496e1d9387c811e85bb40e71a3b29b288963612"
+            ],
+            "markers": "python_version >= '3.7'",
+            "version": "==2.9.0"
         },
         "pypng": {
             "hashes": [
@@ -1009,11 +1016,11 @@
         },
         "urllib3": {
             "hashes": [
-                "sha256:8d22f86aae8ef5e410d4f539fde9ce6b2113a001bb4d189e0aed70642d602b11",
-                "sha256:de7df1803967d2c2a98e4b11bb7d6bd9210474c46e8a0401514e3a42a75ebde4"
+                "sha256:13abf37382ea2ce6fb744d4dad67838eec857c9f4f57009891805e0b5e123594",
+                "sha256:ef16afa8ba34a1f989db38e1dbbe0c302e4289a47856990d0682e374563ce35e"
             ],
             "markers": "python_version >= '3.7'",
-            "version": "==2.0.4"
+            "version": "==2.0.5"
         },
         "websocket-client": {
             "hashes": [
@@ -1036,6 +1043,7 @@
                 "sha256:6a33ee89877bd9abc1158129f6e94be74e2679636b8a205b43b85206c3f0bbdd",
                 "sha256:f72f148f54442c6b056bf931dbc34f986fd0c3b0b6b5a58d013c9aef274d0c88"
             ],
+            "markers": "python_version >= '2.7' and python_version not in '3.0, 3.1, 3.2, 3.3, 3.4, 3.5'",
             "version": "==2.0.1"
         },
         "xlwt": {
@@ -1117,11 +1125,11 @@
         },
         "packaging": {
             "hashes": [
-                "sha256:994793af429502c4ea2ebf6bf664629d07c1a9fe974af92966e4b8d2df7edc61",
-                "sha256:a392980d2b6cffa644431898be54b0045151319d1e7ec34f0cfed48767dd334f"
+                "sha256:048fb0e9405036518eaaf48a55953c750c11e1a1b68e0dd1a9d62ed0c092cfc5",
+                "sha256:8c491190033a9af7e1d931d0b5dacc2ef47509b34dd0de67ed209b5203fc88c7"
             ],
             "markers": "python_version >= '3.7'",
-            "version": "==23.1"
+            "version": "==23.2"
         },
         "pathspec": {
             "hashes": [
