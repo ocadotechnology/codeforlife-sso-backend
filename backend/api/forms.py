@@ -52,6 +52,13 @@ class OtpAuthForm(BaseAuthForm):
         return "Please enter the correct one-time password."
 
 
+class OtpBypassTokenAuthForm(BaseAuthForm):
+    token = forms.CharField(min_length=8, max_length=8)
+
+    def get_invalid_login_error_message(self):
+        return "Must be exactly 8 characters. A token can only be used once."
+
+
 class EmailAuthForm(BaseAuthForm):
     email = forms.EmailField()
     password = forms.CharField(strip=False)
@@ -61,13 +68,6 @@ class EmailAuthForm(BaseAuthForm):
             "Please enter a correct username and password. Note that both"
             " fields are case-sensitive."
         )
-
-
-class TokenAuthForm(BaseAuthForm):
-    token = forms.CharField(min_length=8, max_length=8)
-
-    def get_invalid_login_error_message(self):
-        return "Must be exactly 8 characters. A token can only be used once."
 
 
 class UsernameAuthForm(BaseAuthForm):

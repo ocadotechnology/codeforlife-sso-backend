@@ -16,7 +16,7 @@ from .forms import (
     BaseAuthForm,
     EmailAuthForm,
     OtpAuthForm,
-    TokenAuthForm,
+    OtpBypassTokenAuthForm,
     UserIdAuthForm,
     UsernameAuthForm,
 )
@@ -36,8 +36,8 @@ class LoginView(_LoginView):
             return UserIdAuthForm
         elif form == "otp":
             return OtpAuthForm
-        elif form == "token":
-            return TokenAuthForm
+        elif form == "otp-bypass-token":
+            return OtpBypassTokenAuthForm
 
     def form_valid(self, form: BaseAuthForm):
         # Clear expired sessions.
