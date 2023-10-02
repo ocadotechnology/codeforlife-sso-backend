@@ -2,6 +2,7 @@ import logging
 
 from codeforlife.mixins import CronMixin
 from codeforlife.request import HttpRequest
+from codeforlife.user.models import AuthFactor
 from common.models import UserSession
 from django.contrib.auth import login
 from django.contrib.auth.views import LoginView as _LoginView
@@ -58,15 +59,21 @@ class LoginView(_LoginView):
         # Save session (with data).
         self.request.session.save()
 
-        return JsonResponse(
-            {
-                "auth_factors": list(
-                    self.request.user.session.session_auth_factors.values_list(
-                        "auth_factor__type", flat=True
-                    )
+        response_data = {
+            "auth_factors": list(
+                self.request.user.session.session_auth_factors.values_list(
+                    "auth_factor__type", flat=True
                 )
-            }
-        )
+            ),
+            "otp_bypass_token_exists": False,
+        }
+
+        if AuthFactor.Type.OTP in response_data["auth_factors"]:
+            response_data[
+                "otp_bypass_token_exists"
+            ] = self.request.user.otp_bypass_tokens.exists()
+
+        return JsonResponse(response_data)
 
     def form_invalid(self, form: BaseAuthForm):
         return JsonResponse(form.errors, status=status.HTTP_400_BAD_REQUEST)
