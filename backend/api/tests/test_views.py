@@ -4,6 +4,7 @@ import pyotp
 from codeforlife.tests import CronTestCase
 from codeforlife.user.models import AuthFactor, User
 from django.core import management
+from django.http import HttpResponse
 from django.test import TestCase
 from django.urls import reverse
 from django.utils import timezone
@@ -12,6 +13,10 @@ from django.utils import timezone
 class TestLoginView(TestCase):
     def setUp(self):
         self.user = User.objects.get(id=2)
+
+    def _get_session_auth_factors(self, response: HttpResponse):
+        cookie = response.cookies["sessionid_httponly_false"].value
+        return [af for af in cookie.split(",") if af != ""]
 
     def test_post__otp(self):
         AuthFactor.objects.create(
@@ -28,13 +33,7 @@ class TestLoginView(TestCase):
         )
 
         assert response.status_code == 200
-        self.assertDictEqual(
-            response.json(),
-            {
-                "auth_factors": [AuthFactor.Type.OTP],
-                "otp_bypass_token_exists": False,
-            },
-        )
+        assert self._get_session_auth_factors(response) == [AuthFactor.Type.OTP]
 
         self.user.userprofile.otp_secret = pyotp.random_base32()
         self.user.userprofile.save()
@@ -49,10 +48,7 @@ class TestLoginView(TestCase):
             )
 
         assert response.status_code == 200
-        self.assertDictEqual(
-            response.json(),
-            {"auth_factors": []},
-        )
+        assert self._get_session_auth_factors(response) == []
 
 
 class TestClearExpiredView(CronTestCase):
