@@ -1,14 +1,15 @@
 import logging
 
 from codeforlife.mixins import CronMixin
-from codeforlife.request import HttpRequest
-from codeforlife.user.models import AuthFactor
+from codeforlife.request import HttpRequest, Request
+from codeforlife.user.models import AuthFactor, User
 from common.models import UserSession
+from django.conf import settings
 from django.contrib.auth import login
 from django.contrib.auth.views import LoginView as _LoginView
 from django.contrib.sessions.models import Session, SessionManager
 from django.core import management
-from django.http import JsonResponse
+from django.http import HttpResponse, JsonResponse
 from rest_framework import status
 from rest_framework.response import Response
 from rest_framework.views import APIView
@@ -21,6 +22,7 @@ from .forms import (
     UserIdAuthForm,
     UsernameAuthForm,
 )
+from .permissions import UserHasSessionAuthFactors
 
 
 # TODO: add 2FA logic
@@ -59,23 +61,50 @@ class LoginView(_LoginView):
         # Save session (with data).
         self.request.session.save()
 
-        response_data = {
-            "auth_factors": list(
+        response = HttpResponse()
+
+        # Create a non-HTTP-only session cookie with the pending auth factors.
+        response.set_cookie(
+            key="sessionid_httponly_false",
+            value=",".join(
                 self.request.user.session.session_auth_factors.values_list(
                     "auth_factor__type", flat=True
                 )
-            )
-        }
+            ),
+            max_age=(
+                None
+                if settings.SESSION_EXPIRE_AT_BROWSER_CLOSE
+                else settings.SESSION_COOKIE_AGE
+            ),
+            secure=settings.SESSION_COOKIE_SECURE,
+            samesite=settings.SESSION_COOKIE_SAMESITE,
+            domain=settings.SESSION_COOKIE_DOMAIN,
+            httponly=False,
+        )
 
-        if AuthFactor.Type.OTP in response_data["auth_factors"]:
-            response_data[
-                "otp_bypass_token_exists"
-            ] = self.request.user.otp_bypass_tokens.exists()
-
-        return JsonResponse(response_data)
+        return response
 
     def form_invalid(self, form: BaseAuthForm):
         return JsonResponse(form.errors, status=status.HTTP_400_BAD_REQUEST)
+
+
+class LoginOptionsView(APIView):
+    http_method_names = ["get"]
+    permission_classes = [UserHasSessionAuthFactors]
+
+    def get(self, request: Request):
+        user: User = request.user
+        session_auth_factors = user.session.session_auth_factors
+
+        response_data = {"id": user.id}
+        if session_auth_factors.filter(
+            auth_factor__type=AuthFactor.Type.OTP
+        ).exists():
+            response_data[
+                "otp_bypass_token_exists"
+            ] = user.otp_bypass_tokens.exists()
+
+        return Response(response_data)
 
 
 class ClearExpiredView(CronMixin, APIView):
