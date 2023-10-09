@@ -1,6 +1,6 @@
 from django.urls import include, path, re_path
 
-from .views import AuthFactorsView, ClearExpiredView, LoginView
+from .views import ClearExpiredView, LoginOptionsView, LoginView
 
 urlpatterns = [
     path(
@@ -12,9 +12,9 @@ urlpatterns = [
                     include(
                         [
                             path(
-                                "auth-factors/",
-                                AuthFactorsView.as_view(),
-                                name="session-auth-factors",
+                                "options/",
+                                LoginOptionsView.as_view(),
+                                name="login-options",
                             ),
                             re_path(
                                 r"^(?P<form>email|username|user-id|otp|otp-bypass-token)/$",
