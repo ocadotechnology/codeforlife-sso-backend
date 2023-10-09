@@ -12,7 +12,7 @@ urlpatterns = [
                     include(
                         [
                             path(
-                                "auth_factors/",
+                                "auth-factors/",
                                 AuthFactorsView.as_view(),
                                 name="session-auth-factors",
                             ),
