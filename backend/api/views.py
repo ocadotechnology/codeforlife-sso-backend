@@ -88,7 +88,7 @@ class LoginView(_LoginView):
         return JsonResponse(form.errors, status=status.HTTP_400_BAD_REQUEST)
 
 
-class LoginOptionsView(APIView):
+class AuthFactorsView(APIView):
     http_method_names = ["get"]
     permission_classes = [UserHasSessionAuthFactors]
 
