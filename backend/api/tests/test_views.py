@@ -15,8 +15,13 @@ class TestLoginView(TestCase):
         self.user = User.objects.get(id=2)
 
     def _get_session_auth_factors(self, response: HttpResponse):
-        cookie = response.cookies["sessionid_httponly_false"].value
-        return [af for af in cookie.split(",") if af != ""]
+        return [
+            auth_factor
+            for auth_factor in response.cookies[
+                "sessionid_httponly_false"
+            ].value.split(",")
+            if auth_factor != ""
+        ]
 
     def test_post__otp(self):
         AuthFactor.objects.create(
