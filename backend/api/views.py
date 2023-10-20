@@ -1,3 +1,4 @@
+import json
 import logging
 
 from codeforlife.mixins import CronMixin
@@ -25,7 +26,6 @@ from .forms import (
 from .permissions import UserHasSessionAuthFactors
 
 
-# TODO: add 2FA logic
 class LoginView(_LoginView):
     request: HttpRequest
 
@@ -48,6 +48,7 @@ class LoginView(_LoginView):
 
         # Create session (without data).
         login(self.request, form.user)
+        user = self.request.user
 
         # TODO: use google analytics
         user_session = {"user": form.user}
@@ -61,15 +62,21 @@ class LoginView(_LoginView):
         # Save session (with data).
         self.request.session.save()
 
-        response = HttpResponse()
-
         # Create a non-HTTP-only session cookie with the pending auth factors.
+        response = HttpResponse()
         response.set_cookie(
             key="sessionid_httponly_false",
-            value=",".join(
-                self.request.user.session.session_auth_factors.values_list(
-                    "auth_factor__type", flat=True
-                )
+            value=json.dumps(
+                {
+                    "user_id": user.id,
+                    "auth_factors": list(
+                        user.session.session_auth_factors.values_list(
+                            "auth_factor__type", flat=True
+                        )
+                    ),
+                },
+                separators=(",", ":"),
+                indent=None,
             ),
             max_age=(
                 None
