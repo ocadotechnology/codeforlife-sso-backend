@@ -1,3 +1,5 @@
+import json
+import typing as t
 from unittest.mock import patch
 
 import pyotp
@@ -14,14 +16,14 @@ class TestLoginView(TestCase):
     def setUp(self):
         self.user = User.objects.get(id=2)
 
-    def _get_session_auth_factors(self, response: HttpResponse):
-        return [
-            auth_factor
-            for auth_factor in response.cookies[
-                "sessionid_httponly_false"
-            ].value.split(",")
-            if auth_factor != ""
-        ]
+    def _get_session(self, response: HttpResponse):
+        class Session(t.NamedTuple):
+            user_id: int
+            auth_factors: t.List[str]
+
+        return Session(
+            **json.loads(response.cookies["sessionid_httponly_false"].value)
+        )
 
     def test_post__otp(self):
         AuthFactor.objects.create(
@@ -38,7 +40,9 @@ class TestLoginView(TestCase):
         )
 
         assert response.status_code == 200
-        assert self._get_session_auth_factors(response) == [AuthFactor.Type.OTP]
+        session = self._get_session(response)
+        assert session.user_id == self.user.id
+        assert session.auth_factors == [AuthFactor.Type.OTP]
 
         self.user.userprofile.otp_secret = pyotp.random_base32()
         self.user.userprofile.save()
@@ -53,7 +57,9 @@ class TestLoginView(TestCase):
             )
 
         assert response.status_code == 200
-        assert self._get_session_auth_factors(response) == []
+        session = self._get_session(response)
+        assert session.user_id == self.user.id
+        assert session.auth_factors == []
 
 
 class TestClearExpiredView(CronTestCase):
