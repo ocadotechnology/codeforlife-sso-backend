@@ -3,11 +3,8 @@ name: Main
 on:
   push:
     paths-ignore:
-      - "README.md"
-      - "CHANGELOG.md"
-      - "LICENSE"
-      - ".gitignore"
-      - ".vscode"
+      - "**/*.md"
+      - "**/.*"
   workflow_dispatch:
 
 env:
