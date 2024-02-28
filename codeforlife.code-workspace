@@ -1,0 +1,12 @@
+{
+  "folders": [
+    {
+      "path": ".",
+      "name": "sso"
+    },
+    {
+      "path": "../codeforlife-package-python",
+      "name": "package-python"
+    }
+  ]
+}
