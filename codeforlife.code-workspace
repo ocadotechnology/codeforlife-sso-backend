@@ -1,12 +1,18 @@
 {
   "folders": [
     {
-      "path": ".",
-      "name": "sso"
+      "name": "sso",
+      "path": "."
     },
     {
-      "path": "../codeforlife-package-python",
-      "name": "package-python"
+      "name": "package-python",
+      "path": "../codeforlife-package-python"
     }
-  ]
+  ],
+  "settings": {
+    "autoDocstring.customTemplatePath": ".vscode/extensions/autoDocstring/docstring.mustache",
+    "workbench.colorCustomizations": {
+      "editorRuler.foreground": "#008000"
+    }
+  }
 }

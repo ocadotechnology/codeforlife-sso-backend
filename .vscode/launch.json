@@ -1,34 +1,46 @@
 {
-  // Use IntelliSense to learn about possible attributes.
-  // Hover to view descriptions of existing attributes.
-  // For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387
-  "version": "0.2.0",
   "configurations": [
     {
-      "name": "Django Server",
-      "type": "python",
-      "request": "launch",
-      "django": true,
+      "console": "integratedTerminal",
       "justMyCode": false,
-      "program": "${workspaceFolder}/backend/manage.py",
+      "name": "Python: Current File",
+      "program": "${file}",
+      "request": "launch",
+      "type": "debugpy"
+    },
+    {
+      "justMyCode": false,
+      "name": "Pytest",
+      "presentation": {
+        "hidden": true
+      },
+      "request": "test",
+      "type": "debugpy"
+    },
+    {
+      "name": "React Dev Server",
+      "preLaunchTask": "start-react-dev-server",
+      "request": "launch",
+      "type": "chrome",
+      "url": "http://localhost:3000"
+    },
+    {
       "args": [
         "runserver",
         "localhost:8001"
       ],
-      "preLaunchTask": "migrate-db",
+      "django": true,
       "env": {
         "SERVICE_NAME": "sso",
         "SERVICE_PORT": "8001"
-      }
-    },
-    {
-      "name": "Pytest",
-      "type": "python",
-      "request": "test",
+      },
       "justMyCode": false,
-      "presentation": {
-        "hidden": true
-      }
+      "name": "Django Server",
+      "preLaunchTask": "migrate-db",
+      "program": "${workspaceFolder}/backend/manage.py",
+      "request": "launch",
+      "type": "debugpy"
     }
-  ]
+  ],
+  "version": "0.2.0"
 }
