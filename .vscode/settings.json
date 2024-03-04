@@ -38,14 +38,12 @@
     "**/__pycache__": true
   },
   "isort.args": [
-    "--settings-file=backend/pyproject.toml",
-    "--settings-file=pyproject.toml"
+    "--settings-file=backend/pyproject.toml"
   ],
   "isort.path": [
     "backend/.venv/bin/python",
     "-m",
-    "isort",
-    ".venv/bin/python"
+    "isort"
   ],
   "mypy-type-checker.args": [
     "--config-file=pyproject.toml"
@@ -68,7 +66,7 @@
   "python.analysis.extraPaths": [
     "../codeforlife-package-python"
   ],
-  "python.defaultInterpreterPath": ".venv/bin/python",
+  "python.defaultInterpreterPath": "backend/.venv/bin/python",
   "python.testing.cwd": "${workspaceFolder}/backend",
   "python.testing.pytestArgs": [
     "-n=auto",
