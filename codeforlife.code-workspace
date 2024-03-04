@@ -1,12 +1,12 @@
 {
   "folders": [
     {
-      "name": "sso",
-      "path": "."
-    },
-    {
       "name": "package-python",
       "path": "../codeforlife-package-python"
+    },
+    {
+      "name": "sso",
+      "path": "."
     }
   ],
   "settings": {
