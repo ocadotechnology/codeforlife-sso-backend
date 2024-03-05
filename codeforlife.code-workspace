@@ -7,6 +7,10 @@
     {
       "name": "package-python",
       "path": "../codeforlife-package-python"
+    },
+    {
+      "name": "package-javascript",
+      "path": "../codeforlife-package-javascript"
     }
   ],
   "settings": {
