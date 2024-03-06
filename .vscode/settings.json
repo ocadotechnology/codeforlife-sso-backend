@@ -1,12 +1,79 @@
 {
+  "[md]": {
+    "editor.tabSize": 4
+  },
+  "[python]": {
+    "editor.defaultFormatter": "ms-python.black-formatter",
+    "editor.tabSize": 4
+  },
   "black-formatter.args": [
     "--config",
-    "backend/pyproject.toml"
+    "pyproject.toml"
   ],
+  "black-formatter.cwd": "${workspaceFolder}/backend",
+  "black-formatter.path": [
+    ".venv/bin/python",
+    "-m",
+    "black"
+  ],
+  "cSpell.words": [
+    "codeforlife",
+    "klass",
+    "ocado",
+    "kurono",
+    "pipenv"
+  ],
+  "editor.codeActionsOnSave": {
+    "source.organizeImports": "explicit"
+  },
+  "editor.formatOnSave": true,
+  "editor.rulers": [
+    80
+  ],
+  "editor.tabSize": 2,
+  "files.exclude": {
+    "**/.hypothesis": true,
+    "**/.mypy_cache": true,
+    "**/.pytest_cache": true,
+    "**/__pycache__": true
+  },
+  "isort.args": [
+    "--settings-file=backend/pyproject.toml"
+  ],
+  "isort.path": [
+    "backend/.venv/bin/python",
+    "-m",
+    "isort"
+  ],
+  "mypy-type-checker.args": [
+    "--config-file=pyproject.toml"
+  ],
+  "mypy-type-checker.cwd": "${workspaceFolder}/backend",
+  "mypy-type-checker.path": [
+    ".venv/bin/python",
+    "-m",
+    "mypy"
+  ],
+  "pylint.args": [
+    "--rcfile=pyproject.toml"
+  ],
+  "pylint.cwd": "${workspaceFolder}/backend",
+  "pylint.path": [
+    ".venv/bin/python",
+    "-m",
+    "pylint"
+  ],
+  "python.analysis.extraPaths": [
+    "../codeforlife-package-python"
+  ],
+  "python.defaultInterpreterPath": "backend/.venv/bin/python",
+  "python.testing.cwd": "${workspaceFolder}/backend",
   "python.testing.pytestArgs": [
-    "-c=backend/pyproject.toml",
-    "backend"
+    "-n=auto",
+    "-c=pyproject.toml",
+    "."
   ],
+  "python.testing.pytestEnabled": true,
   "python.testing.unittestEnabled": false,
-  "python.testing.pytestEnabled": true
+  "typescript.preferences.quoteStyle": "single"
 }

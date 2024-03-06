@@ -1,24 +1,37 @@
 {
-  "version": "2.0.0",
   "tasks": [
     {
-      "label": "install-dev-deps",
-      "type": "shell",
+      "isBackground": true,
+      "label": "start-react-dev-server",
       "options": {
-        "cwd": "${workspaceFolder}/backend"
+        "env": {
+          "BROWSER": "none"
+        }
       },
-      "command": "pipenv install --dev"
+      "path": "frontend",
+      "problemMatcher": [],
+      "script": "start",
+      "type": "npm"
     },
     {
-      "label": "migrate-db",
-      "type": "shell",
+      "command": "pipenv install --dev",
+      "label": "pipenv-install-dev",
       "options": {
         "cwd": "${workspaceFolder}/backend"
       },
+      "type": "shell"
+    },
+    {
+      "command": "pipenv run python ./manage.py migrate",
       "dependsOn": [
-        "install-dev-deps"
+        "pipenv-install-dev"
       ],
-      "command": "pipenv run python ./manage.py migrate"
+      "label": "migrate-db",
+      "options": {
+        "cwd": "${workspaceFolder}/backend"
+      },
+      "type": "shell"
     }
-  ]
+  ],
+  "version": "2.0.0"
 }
