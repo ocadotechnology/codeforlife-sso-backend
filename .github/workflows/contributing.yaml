@@ -6,4 +6,3 @@ on:
 jobs:
   validate-existing-contributors:
     uses: ocadotechnology/codeforlife-workspace/.github/workflows/validate-existing-contributors.yaml@main
-# test change
