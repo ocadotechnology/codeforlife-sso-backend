@@ -16,7 +16,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: 🛫 Checkout
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
 
       - name: 🐍 Set up Python
         uses: actions/setup-python@v4
@@ -50,7 +50,7 @@ jobs:
     environment: ${{ github.ref_name }}
     steps:
       - name: 🛫 Checkout
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
 
       - name: 🐍 Set up Python
         uses: actions/setup-python@v4
@@ -58,12 +58,14 @@ jobs:
           python-version: ${{ env.PYTHON_VERSION }}
 
       - name: 🗝 Authenticate with GCloud
-        uses: google-github-actions/auth@v1
+        uses: google-github-actions/auth@v2
         with:
-          credentials_json: ${{ secrets.GCP_CREDENTIALS }}
+          project_id: 'decent-digit-629'
+          workload_identity_provider: 'projects/354656325390/locations/global/workloadIdentityPools/cfl-pool/providers/cfl-provider'
+          service_account: 'github-actions-34@decent-digit-629.iam.gserviceaccount.com'
 
       - name: 🤖 Set up GCloud SDK
-        uses: google-github-actions/setup-gcloud@v1
+        uses: google-github-actions/setup-gcloud@v2
 
       - name: 🛠 Install Backend Dependencies
         working-directory: ./backend
