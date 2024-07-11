@@ -9,6 +9,9 @@
       "type": "debugpy"
     },
     {
+      "env": {
+        "PYTEST_ADDOPTS": "--no-cov"
+      },
       "justMyCode": false,
       "name": "Pytest",
       "presentation": {
@@ -18,16 +21,9 @@
       "type": "debugpy"
     },
     {
-      "name": "React Dev Server",
-      "preLaunchTask": "start-react-dev-server",
-      "request": "launch",
-      "type": "chrome",
-      "url": "http://localhost:3000"
-    },
-    {
       "args": [
         "runserver",
-        "localhost:8001"
+        "localhost:8000"
       ],
       "django": true,
       "env": {
@@ -36,8 +32,8 @@
       },
       "justMyCode": false,
       "name": "Django Server",
-      "preLaunchTask": "migrate-db",
-      "program": "${workspaceFolder}/backend/manage.py",
+      "preLaunchTask": "setup",
+      "program": "${workspaceFolder}/manage.py",
       "request": "launch",
       "type": "debugpy"
     }
