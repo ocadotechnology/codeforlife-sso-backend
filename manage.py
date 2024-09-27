@@ -6,8 +6,9 @@ import sys
 
 def main():
     """Run administrative tasks."""
-    os.environ.setdefault("DJANGO_SETTINGS_MODULE", "service.settings")
+    os.environ.setdefault("DJANGO_SETTINGS_MODULE", "settings")
     try:
+        # pylint: disable-next=import-outside-toplevel
         from django.core.management import execute_from_command_line
     except ImportError as exc:
         raise ImportError(
