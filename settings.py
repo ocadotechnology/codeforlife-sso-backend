@@ -21,5 +21,4 @@ from codeforlife.settings import *
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent
 
-DATABASES = get_databases(BASE_DIR)
 STATIC_ROOT = get_static_root(BASE_DIR)
