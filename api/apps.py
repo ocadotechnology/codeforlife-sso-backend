@@ -9,7 +9,3 @@ from django.apps import AppConfig
 # pylint: disable-next=missing-class-docstring
 class ApiConfig(AppConfig):
     name = "api"
-
-    def ready(self):
-        # pylint: disable-next=import-outside-toplevel,unused-import
-        from . import signals
