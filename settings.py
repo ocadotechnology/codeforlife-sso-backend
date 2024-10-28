@@ -13,9 +13,13 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/3.2/ref/settings/
 """
 
+import os
 from pathlib import Path
 
-# pylint: disable-next=wildcard-import,unused-wildcard-import
+# NOTE: Must come before importing CFL settings.
+os.environ["SERVICE_NAME"] = "sso"
+
+# pylint: disable-next=wildcard-import,unused-wildcard-import,wrong-import-position
 from codeforlife.settings import *
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.

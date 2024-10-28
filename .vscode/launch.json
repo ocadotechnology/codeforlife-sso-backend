@@ -23,11 +23,10 @@
     {
       "args": [
         "runserver",
-        "localhost:8000"
+        "localhost:8001"
       ],
       "django": true,
       "env": {
-        "SERVICE_NAME": "sso",
         "SERVICE_PORT": "8001"
       },
       "justMyCode": false,
