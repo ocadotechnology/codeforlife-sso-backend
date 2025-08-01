@@ -12,8 +12,8 @@ from django.core.management import call_command as _call_command
 
 
 class TestSession(CeleryTestCase):
-    @patch("src.sso.tasks.session.call_command", side_effect=_call_command)
+    @patch("src.tasks.session.call_command", side_effect=_call_command)
     def test_clear_sessions(self, call_command: Mock):
         """Can clear all expired sessions."""
-        self.apply_task("src.sso.tasks.session.clear")
+        self.apply_task("src.tasks.session.clear")
         call_command.assert_called_once_with("clearsessions")
