@@ -1,3 +1,10 @@
+## [1.0.4](https://github.com/ocadotechnology/codeforlife-sso-backend/compare/v1.0.3...v1.0.4) (2025-12-03)
+
+
+### Bug Fixes
+
+* Install latest package ([2fc37ff](https://github.com/ocadotechnology/codeforlife-sso-backend/commit/2fc37ffd210ded053ce5b49cacd6878c2947fdd6))
+
 ## [1.0.3](https://github.com/ocadotechnology/codeforlife-sso-backend/compare/v1.0.2...v1.0.3) (2025-11-11)
 
 
